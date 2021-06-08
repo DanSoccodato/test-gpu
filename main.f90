@@ -35,7 +35,6 @@ program test
      write(ci,'(i1)') i
      write(cim1,'(i1)') i-1
 
-     close(37)
      open(unit=37,file='H/H_'//ci//cim1//'_n.dat',access='stream',form='unformatted')
      read(37) nrow, ncol
      close(37)
