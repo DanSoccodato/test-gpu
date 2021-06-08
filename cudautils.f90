@@ -47,6 +47,12 @@ module cudautils
     !$acc enter data copyin(A%val(0:nrow,0:ncol))
  end subroutine copyToGPU
 
+ !~- Routine to perform the absolute sum of each element inside a matrix on the GPU ~-
+ ! Arguments:  
+ !           hh: the CublasHandle 
+ !           H: the matrix for which we want the basolute sum
+ !           summ: real variable that is the desired sum 
+ !~-
   subroutine sum_gpu(hcublas, Mat, summ)
     type(cublasHandle), intent(in) :: hcublas
     complex(dp), intent(in) :: Mat(:,:)
@@ -88,7 +94,14 @@ module cudautils
        call deleteGPU(M(ii,ii-1))
     end do
   end subroutine delete_trid_fromGPU
-  
+ 
+ !~- Routine to perform the absolute sum of each element inside each block of H ~-
+ ! Arguments:  
+ !           hh: the CublasHandle to call the sum_gpu function
+ !           H: the tridiagonal matrix of matrices
+ !           name_: a string to print the name of the tridiagonal matrix
+ !           gpu: logical variable. If .true. , the sum is performed on the GPU. If .false.  it is performed on the CPU
+ !~-
   subroutine check_sum_trid(hh,T,name_,gpu)
     type(z_DNS), dimension(:,:), intent(in) :: T
     character(3), intent(in) :: name_
