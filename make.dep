@@ -1,0 +1,3 @@
+main.o: mattype.o ln_precision.o cudautils.o
+cudautils.o: ln_precision.o mattype.o
+mattype.o: ln_precision.o
