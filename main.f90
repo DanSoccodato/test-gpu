@@ -17,6 +17,7 @@ program test
   !derived type that contains the matrix, the number of rows and the number of columns (definition is in mattype.f90). H is in
   !tri-diagonal form, so only tri-diagonal elements are occupied by a z_DNS-type matrix.
 
+  !Here I just read the number of rows and columns for the first block (and for all the other blocks in the loop below)
   open(unit=37,file='H/H_11_n.dat',access='stream', form='unformatted')
   read(37) nrow,ncol
   close(37)
@@ -24,8 +25,9 @@ program test
   !The create subroutine just allocates the single blocks of H as H(i,i)(nrow,ncol) (routine in mattype.f90)
   call create(H(1,1),nrow,ncol)
 
+  !Here the matrix read from binary file is assigned to H(1,1) (same for all the other blocks in the loop)
   open(unit=37,file='H/H_11.bin',access='stream')
-  read(37) H(1,1)%val !Assembling the H matrix reading from binary file
+  read(37) H(1,1)%val 
   close(37)
 
   !Repeating the same procedure for each block of H
